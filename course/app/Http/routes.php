@@ -20,3 +20,11 @@ Route::controllers([
 	'auth' => 'Auth\AuthController',
 	'password' => 'Auth\PasswordController',
 ]);
+
+Route::get('example',function (){
+
+	$user = 'Duilio';
+
+	return view('examples.template', compact('user'));
+
+});
