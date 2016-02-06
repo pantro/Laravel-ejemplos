@@ -8,6 +8,11 @@
 				<div class="panel-heading">Usuarios</div>
 
 				<div class="panel-body">
+					<p>
+						<a class="btn btn-info" href="{{ route('admin.users.create') }}" role="button">
+							Nuevo usuario
+						</a>
+					</p>
 					<p>Hay {{ $users -> total() }} usuarios</p>
 					<table class="table table-striped">
 						<tr>

@@ -4,7 +4,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\User;
+//use Illuminate\Support\Facades\Request;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Redirector;
 
 class UsersController extends Controller {
 
@@ -27,7 +29,7 @@ class UsersController extends Controller {
 	 */
 	public function create()
 	{
-		//
+		return view('admin.users.create');
 	}
 
 	/**
@@ -35,9 +37,14 @@ class UsersController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	public function store(Request $request, Redirector $redirect)
 	{
-		//
+		$user = new User($request -> all());
+		$user -> save();
+
+		return $redirect -> route('admin.users.index');
+		//return \Redirect::route('admin.users.index');
+		//return redirect() -> route('admin.users.index');
 	}
 
 	/**
