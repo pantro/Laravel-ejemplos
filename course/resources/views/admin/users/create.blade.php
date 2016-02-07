@@ -8,6 +8,8 @@
 				<div class="panel-heading">Nuevo usuario</div>
 
 				<div class="panel-body">
+					@include('admin.partials.messages')
+					
 					{!! Form::open(['route' => 'admin.users.store', 'method' => 'POST']) !!}
 						
 						@include('admin.users.partials.fields')

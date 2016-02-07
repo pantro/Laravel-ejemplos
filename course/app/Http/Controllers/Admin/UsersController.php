@@ -3,10 +3,14 @@
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+use App\Http\Requests\CreateUserRequest;
 use App\User;
+
 //use Illuminate\Support\Facades\Request;
-//use Illuminate\Http\Request;
-use Request;
+use Illuminate\Http\Request;
+//use Request;
+
+//use Illuminate\Support\Facades\Validator;
 use Illuminate\Routing\Redirector;
 
 class UsersController extends Controller {
@@ -38,14 +42,14 @@ class UsersController extends Controller {
 	 *
 	 * @return Response
 	 */
-	public function store(Request $request, Redirector $redirect)
+	public function store(CreateUserRequest $request)
 	{
-		$user = new User($request -> all());
-		$user -> save();
+		
+		$user = User::create($request -> all());
 
-		return $redirect -> route('admin.users.index');
+		//return $redirect -> route('admin.users.index');
 		//return \Redirect::route('admin.users.index');
-		//return redirect() -> route('admin.users.index');
+		return redirect() -> route('admin.users.index');
 	}
 
 	/**
