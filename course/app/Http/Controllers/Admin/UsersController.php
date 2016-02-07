@@ -4,6 +4,7 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 use App\Http\Requests\CreateUserRequest;
+use App\Http\Requests\EditUserRequest;
 use App\User;
 
 //use Illuminate\Support\Facades\Request;
@@ -82,11 +83,11 @@ class UsersController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function update($id)
+	public function update(EditUserRequest $request, $id)
 	{
 		$user = User::findOrFail($id);//Si no hay usuario manda un error 404
 
-		$user -> fill(Request::all());
+		$user -> fill($request->all());
 		$user -> save();
 
 		return redirect() -> back();
