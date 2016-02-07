@@ -5,7 +5,8 @@ use App\Http\Controllers\Controller;
 
 use App\User;
 //use Illuminate\Support\Facades\Request;
-use Illuminate\Http\Request;
+//use Illuminate\Http\Request;
+use Request;
 use Illuminate\Routing\Redirector;
 
 class UsersController extends Controller {
@@ -66,7 +67,9 @@ class UsersController extends Controller {
 	 */
 	public function edit($id)
 	{
-		//
+		$user = User::findOrFail($id);//Si no hay usuario manda un error 404
+
+		return view('admin.users.edit', compact('user'));
 	}
 
 	/**
@@ -77,7 +80,12 @@ class UsersController extends Controller {
 	 */
 	public function update($id)
 	{
-		//
+		$user = User::findOrFail($id);//Si no hay usuario manda un error 404
+
+		$user -> fill(Request::all());
+		$user -> save();
+
+		return redirect() -> back();
 	}
 
 	/**
