@@ -18,8 +18,11 @@
 						<button type="submit" class="btn btn-default">Actualizar usuario</button>
 
 					{!! Form::close() !!}
+
 				</div>
+
 			</div>
+			@include('admin.users.partials.delete')
 		</div>
 	</div>
 </div>
