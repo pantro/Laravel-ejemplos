@@ -105,11 +105,21 @@ class UsersController extends Controller {
 	 * @param  int  $id
 	 * @return Response
 	 */
-	public function destroy($id)
+	public function destroy($id, Request $request)
 	{
+		
 		$this->user -> delete();
 
-		Session::flash('message', $this->user->full_name.' fue eliminado de nuestros registros');
+		$message = $this->user->full_name.' fue eliminado de nuestros registros';
+
+		if ($request -> ajax()) {
+			return response()->json([
+					'id'     => $this->user->id,
+					'message'=> $message
+				]);
+		}
+
+		Session::flash('message', $message);
 
 		return redirect()->route('admin.users.index');
 	}
