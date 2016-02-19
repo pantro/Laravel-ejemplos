@@ -12,10 +12,19 @@ use Illuminate\Http\Request;
 //use Request;
 
 use Illuminate\Routing\Redirector;
+use Illuminate\Routing\Route;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class UsersController extends Controller {
+
+	public function __construct(){
+		$this -> beforeFilter('@findUser', ['only' => ['show', 'edit','update','destroy']]);
+	}
+
+	public function findUser(Route $route){
+		$this -> user = User::findOrFail($route->getParameter('users'));//Si no hay usuario manda un error 404
+	}
 
 	/**
 	 * Display a listing of the resource.
@@ -73,9 +82,7 @@ class UsersController extends Controller {
 	 */
 	public function edit($id)
 	{
-		$user = User::findOrFail($id);//Si no hay usuario manda un error 404
-
-		return view('admin.users.edit', compact('user'));
+		return view('admin.users.edit')->with('user',$this->user);
 	}
 
 	/**
@@ -86,10 +93,8 @@ class UsersController extends Controller {
 	 */
 	public function update(EditUserRequest $request, $id)
 	{
-		$user = User::findOrFail($id);//Si no hay usuario manda un error 404
-
-		$user -> fill($request->all());
-		$user -> save();
+		$this->user -> fill($request->all());
+		$this->user -> save();
 
 		return redirect() -> back();
 	}
@@ -102,11 +107,9 @@ class UsersController extends Controller {
 	 */
 	public function destroy($id)
 	{
-		$user = User::findOrFail($id);//Si no hay usuario manda un error 404
+		$this->user -> delete();
 
-		$user -> delete();
-
-		Session::flash('message', $user->full_name.' fue eliminado de nuestros registros');
+		Session::flash('message', $this->user->full_name.' fue eliminado de nuestros registros');
 
 		return redirect()->route('admin.users.index');
 	}
